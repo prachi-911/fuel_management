@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Car Mileage Predictor - India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">🚗 Car Mileage Predictor - India</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="glass-card">
+            <h1 class="page-title">About Car Mileage Predictor - India</h1>
+            <p class="content-text">
+                Welcome to the Car Mileage Predictor - India, an advanced machine learning application that estimates vehicle fuel efficiency based on technical specifications. This project demonstrates the complete data science pipeline from data collection to model deployment, optimized for Indian roads and fuel prices.
+            </p>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title">📊 Dataset & Model Performance</h2>
+            <p class="content-text">
+                Our model is trained on a comprehensive dataset containing over 45,000 vehicles from the U.S. Department of Energy's fuel economy database, plus 31 popular Indian vehicle models. The dataset spans from 1984 to 2026 and includes detailed technical specifications, with special focus on Indian market vehicles.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">45,000+</div>
+                    <div class="stat-label">Vehicles in Dataset</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">90.5%</div>
+                    <div class="stat-label">Model Accuracy (R²)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">±1.1</div>
+                    <div class="stat-label">MAE (MPG)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">40+</div>
+                    <div class="stat-label">Years of Data</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title">🤖 Machine Learning Pipeline</h2>
+            <p class="content-text">
+                This application follows a complete end-to-end data science workflow:
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📥</div>
+                    <div class="feature-title">Data Collection</div>
+                    <div class="feature-description">Comprehensive vehicle dataset from official government sources</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🧹</div>
+                    <div class="feature-title">Data Cleaning</div>
+                    <div class="feature-description">Handling missing values and filtering unrealistic measurements</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔬</div>
+                    <div class="feature-title">Feature Engineering</div>
+                    <div class="feature-description">Encoding categorical variables and creating derived features</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌲</div>
+                    <div class="feature-title">Random Forest</div>
+                    <div class="feature-description">Advanced ensemble learning for accurate predictions</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title">🛠️ Technology Stack</h2>
+            <p class="content-text">
+                This application is built using modern web technologies and machine learning frameworks:
+            </p>
+            
+            <div class="tech-stack">
+                <div class="tech-badge">Python</div>
+                <div class="tech-badge">Django</div>
+                <div class="tech-badge">Scikit-Learn</div>
+                <div class="tech-badge">Pandas</div>
+                <div class="tech-badge">NumPy</div>
+                <div class="tech-badge">HTML5</div>
+                <div class="tech-badge">CSS3</div>
+                <div class="tech-badge">JavaScript</div>
+                <div class="tech-badge">Random Forest</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title">🎯 Key Features</h2>
+            <p class="content-text">
+                Our predictor includes several advanced features:
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Real-time Predictions</div>
+                    <div class="feature-description">Instant fuel efficiency calculations</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title">Cost Estimation</div>
+                    <div class="feature-description">Annual fuel cost in Indian Rupees</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Modern UI</div>
+                    <div class="feature-description">Glassmorphic design with smooth animations</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-title">Responsive</div>
+                    <div class="feature-description">Works on all device sizes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title">📈 Model Insights</h2>
+            <p class="content-text">
+                The Random Forest model identifies several key factors that influence fuel efficiency:
+            </p>
+            <ul class="content-text" style="margin-left: 2rem;">
+                <li><strong>Engine Displacement:</strong> Larger engines typically consume more fuel</li>
+                <li><strong>Number of Cylinders:</strong> More cylinders usually mean lower efficiency</li>
+                <li><strong>Fuel Type:</strong> Different fuels have varying energy densities</li>
+                <li><strong>Drive Type:</strong> AWD systems add weight and complexity</li>
+                <li><strong>Vehicle Age:</strong> Newer technologies improve efficiency</li>
+            </ul>
+        </div>
+
+        <div class="glass-card" style="text-align: center;">
+            <p class="content-text">
+                This project demonstrates the practical application of machine learning in solving real-world problems. 
+                By combining data science techniques with modern web development, we create tools that provide valuable insights to users.
+            </p>
+            <a href="/" class="back-btn">← Back to Predictor</a>
+        </div>
+    </div>
+</body>
+</html>

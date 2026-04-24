@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Mileage Predictor - India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-control option {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-predict {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.4);
+        }
+
+        .btn-predict:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-card {
+            text-align: center;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .result-unit {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            border-radius: 10px;
+            padding: 1rem;
+            color: white;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .info-section {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: white;
+        }
+
+        .info-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">🚗 Car Mileage Predictor - India</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="info-section">
+            <h2>Advanced Car Mileage Prediction - India</h2>
+            <p>Using machine learning to predict your car's fuel efficiency based on vehicle specifications, optimized for Indian roads and fuel prices</p>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="form-title">Vehicle Specifications</h2>
+            <form id="predictionForm">
+                <div class="error" id="errorMessage"></div>
+                
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" id="year" name="year" class="form-control" 
+                           min="1980" max="2024" value="2022" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cylinders">Number of Cylinders</label>
+                    <select id="cylinders" name="cylinders" class="form-control" required>
+                        <option value="">Select cylinders</option>
+                        <option value="3">3</option>
+                        <option value="4" selected>4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="displacement">Engine Displacement (Liters)</label>
+                    <input type="number" id="displacement" name="displacement" class="form-control" 
+                           step="0.1" min="0.5" max="10" value="2.0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="drive">Drive Type</label>
+                    <select id="drive" name="drive" class="form-control" required>
+                        <option value="">Select drive type</option>
+                        {% for option in drive_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="transmission">Transmission</label>
+                    <select id="transmission" name="transmission" class="form-control" required>
+                        <option value="">Select transmission</option>
+                        {% for option in trans_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fuel_type">Fuel Type</label>
+                    <select id="fuel_type" name="fuel_type" class="form-control" required>
+                        <option value="">Select fuel type</option>
+                        {% for option in fuel_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-predict" id="predictBtn">
+                    Predict Fuel Efficiency
+                </button>
+            </form>
+        </div>
+
+        <div class="glass-card results-card">
+            <h2 class="form-title">Prediction Results</h2>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analyzing vehicle specifications...</p>
+            </div>
+
+            <div id="results" style="display: none;">
+                <div class="result-item">
+                    <div class="result-label">Combined Fuel Efficiency</div>
+                    <div class="result-value">
+                        <span id="kmplValue">--</span>
+                        <span class="result-unit">KMPL</span>
+                    </div>
+                    <div class="result-value" style="font-size: 1.5rem; margin-top: 0.5rem;">
+                        <span id="mpgValue">--</span>
+                        <span class="result-unit">MPG</span>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Estimated Annual Fuel Cost</div>
+                    <div class="result-value">
+                        ₹<span id="fuelCost">--</span>
+                        <span class="result-unit">/year</span>
+                    </div>
+                    <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-top: 0.5rem;">
+                        Based on 15,000 km/year at ₹102/liter (petrol)
+                    </div>
+                </div>
+            </div>
+
+            <div id="placeholder" class="result-item">
+                <div style="color: rgba(255, 255, 255, 0.7);">
+                    Enter vehicle specifications and click "Predict" to see results
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('predictBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            const placeholder = document.getElementById('placeholder');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide previous results and errors
+            results.style.display = 'none';
+            placeholder.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Show loading
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Predicting...';
+            
+            try {
+                const response = await fetch('/predict/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update results
+                    document.getElementById('kmplValue').textContent = data.predicted_kmpl;
+                    document.getElementById('mpgValue').textContent = data.predicted_mpg;
+                    document.getElementById('fuelCost').textContent = data.annual_fuel_cost;
+                    
+                    // Show results
+                    loading.style.display = 'none';
+                    results.style.display = 'block';
+                } else {
+                    throw new Error(data.error || 'Prediction failed');
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                errorMessage.textContent = 'Error: ' + error.message;
+                errorMessage.style.display = 'block';
+                placeholder.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Predict Fuel Efficiency';
+            }
+        });
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
